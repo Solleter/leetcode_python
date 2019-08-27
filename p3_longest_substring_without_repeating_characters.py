@@ -21,6 +21,7 @@ import queue
 q = queue.Queue()
 
 class Solution:
+    # 获取最长不重复子串长度
     def lengthOfLongestSubstringV2(self, s):
         charDict = {}
         startIndex = 0
@@ -33,6 +34,24 @@ class Solution:
             if currLen > maxLen:
                 maxLen = currLen
         return maxLen
+
+    # 获取最长不重复子串
+    def longestSubstring(self, s):
+        charDict = {}
+        startIndex = 0
+        maxLen = 0
+        longestStartIndex = 0
+        longestEndIndex = 0
+        for i, char in enumerate(s):
+            if char in charDict and charDict[char] >= startIndex:
+                startIndex = charDict[char] + 1
+            charDict[char] = i
+            currLen = i - startIndex + 1
+            if currLen > maxLen:
+                maxLen = currLen
+                longestStartIndex = startIndex
+                longestEndIndex = i
+        return s[longestStartIndex:longestEndIndex + 1]
 
 
     def lengthOfLongestSubstring(self, s):
@@ -63,7 +82,9 @@ class Solution:
 
 
 if __name__ == '__main__':
-    test_str = 'abba'
+    test_str = 'bbbbbbbbbb'
     solution = Solution()
     result = solution.lengthOfLongestSubstringV2(test_str)
+    resultStr = solution.longestSubstring(test_str)
     print(result)
+    print(resultStr)
